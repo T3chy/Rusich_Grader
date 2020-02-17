@@ -10,7 +10,7 @@ from googleapiclient.http import MediaIoBaseDownload
 # If modifying these scopes, delete the file token.pickle.
 SCOPES = ['https://www.googleapis.com/auth/drive.metadata.readonly','https://www.googleapis.com/auth/drive','https://www.googleapis.com/auth/drive.file']
 
-def main():
+def main(id):
     """Shows basic usage of the Drive v3 API.
     Prints the names and ids of the first 10 files the user has access to.
     """
@@ -34,6 +34,18 @@ def main():
             pickle.dump(creds, token)
 
     service = build('drive', 'v3', credentials=creds)
+    with open('token.pickle', 'rb') as token:
+        creds = pickle.load(token)
+        service = build('drive', 'v3', credentials=creds)
+        file_id = str(id)
+        request = service.files().export_media(fileId=file_id,
+         mimeType='plain/text')
+        fh = io.FileIO(id + '.txt', 'wb')
+        downloader = MediaIoBaseDownload(fh, request)
+        done = False
+        while done is False:
+            status, done = downloader.next_chunk()
+            print("Download %d%%." % int(status.progress() * 100))
 if __name__ == '__main__':
     main()
     # oh god pls work
@@ -44,7 +56,7 @@ def writedoc(id, filename):
 	file_id = str(id)
 	request = service.files().export_media(fileId=file_id,
 	 mimeType='text/plain')
-	fh = io.FileIO(filename + '.txt', 'wb')
+	fh = io.FileIO(id + '.txt', 'wb')
 	downloader = MediaIoBaseDownload(fh, request)
 	done = False
 	while done is False:
