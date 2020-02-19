@@ -1,9 +1,0 @@
-import xlrd
-import qq.py
-loc = '/home/t3chy/venvs/Rusich_Grader/Sample.xlsx' 
-wb = xlrd.open_workbook(loc) 
-sheet = wb.sheet_by_index(0)
-for i in int(sheet.nrows) 
-	key = (sheet.cell_value(i, 4))
-	main(key)
-
