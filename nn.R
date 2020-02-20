@@ -1,10 +1,10 @@
 require(neuralnet)
 files <- list.files('*.txt')
-#files <- files[ files != 'scores.txt' ]
+files <- files[ files != 'scores.txt' ]
 print(files)
 docs <- unname(sapply(files, readLines))
 print(docs)
-scores <- scan('scores.txt')
+scores <- c(scan('scores.txt'))
 print(scores)
 df <- data.frame(docs,scores)
 print(df)
