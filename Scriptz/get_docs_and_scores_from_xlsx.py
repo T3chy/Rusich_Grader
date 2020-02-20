@@ -11,7 +11,8 @@ def downloadfromsheet(loc):
 		fileid = sheet.cell_value(i,4)
 		print(fileid)
 		qq.main(fileid)
-		print('download completed for file'+i+'of'+sheet.nrows)
+		print('download completed for file '+str(i)+' of '+str(sheet.nrows))
+	print('Download Complete!')
 sss = []
 os.chdir('/home/t3chy/venvs/Rusich_Grader/')
 for file in glob.glob("*.xlsx"):
