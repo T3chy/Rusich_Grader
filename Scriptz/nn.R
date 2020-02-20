@@ -1,13 +1,15 @@
 require(neuralnet)
-files <- list.files('*.txt')
-#files <- files[ files != 'scores.txt' ]
-print(files)
-docs <- unname(sapply(files, readLines))
-print(docs)
-scores <- scan('scores.txt')
-print(scores)
-df <- data.frame(docs,scores)
-print(df)
-nn=neuralnet(scores~docs,data=df, hidden=3,act.fct = "logistic",
-                linear.output = FALSE)
+library(readr)
+library(dplyr)
+setwd("~/venvs/Rusich_Grader")
+scores <- read.csv(file = 'idscores.csv')
+keys <- select(scores,FILE_KEY)
+PurposeOrg <- select(scores,score_purpose/organziation)
+EvidenceElab <- select(scores,score_evidence and elaboration)
+Conv <- select(scores,score_conventions)
+Interp <- select(scores,score_interpreteation) 
+nn <- neuralnet(docs ~ PurposeOrg + EvidenceElab + Conv + Interp,data=trainset, hidden=c(5,2), linear.output=TRUE, threshold=0.01)
+nn$result.matrix 
+results <- data.frame(actual = testset$consumption, prediction = nn.results$net.result)
+results
 plot(nn)
