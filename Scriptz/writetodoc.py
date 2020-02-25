@@ -7,14 +7,14 @@ from google.auth.transport.requests import Request
 import io
 from io import BytesIO
 from googleapiclient.http import MediaIoBaseDownload
-def writedoc(id, filename):
+def writedoc(id):
 	with open('token.pickle', 'rb') as token:
         	    creds = pickle.load(token)
 	service = build('drive', 'v3', credentials=creds)
 	file_id = str(id)
 	request = service.files().export_media(fileId=file_id,
 	 mimeType='text/plain')
-	fh = io.FileIO(filename + '.txt', 'wb')
+	fh = io.FileIO(id + '.txt', 'wb')
 	downloader = MediaIoBaseDownload(fh, request)
 	done = False
 	while done is False:
