@@ -20,3 +20,8 @@ def writedoc(id):
 	while done is False:
 	    status, done = downloader.next_chunk()
 	    print("Download %d%%." % int(status.progress() * 100))
+def printdoc(id):
+        writedoc(id)
+        with open(id+'.txt','r') as f:
+               print(f.read())
+

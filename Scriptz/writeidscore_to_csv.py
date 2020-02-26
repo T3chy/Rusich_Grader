@@ -1,6 +1,7 @@
 #import qq
 import csv
 import xlrd
+import writetodoc
 import glob, os
 def sheet2json(loc):
 	init = 0
@@ -12,7 +13,7 @@ def sheet2json(loc):
 		keyandscores = []
 		print(i)
 
-		keyandscores = [str(sheet.cell_value(i,4)),
+		keyandscores = [str(writetodoc.printdoc(i,4)),
 		str(sheet.cell_value(i,5)),
 		str(sheet.cell_value(i,6)),
 		str(sheet.cell_value(i,7)),
